@@ -19,22 +19,22 @@ public:
     TreeNode(T i);
 
 private:
-    TreeNode<T> *Left, *Right;
-    T Data;
+    TreeNode<T> *left, *right;
+    T data;
 };
 
 template<class T>
 TreeNode<T>::TreeNode() {
-    Left = NULL;
-    Right = NULL;
-    Data = 0;
+    left = NULL;
+    right = NULL;
+    data = 0;
 }
 
 template<class T>
 TreeNode<T>::TreeNode(T i) {
-    Left = NULL;
-    Right = NULL;
-    Data = i;
+    left = NULL;
+    right = NULL;
+    data = i;
 }
 
 template<class T>
@@ -42,152 +42,152 @@ class Tree {
 public:
     Tree();
 
-    void Insert(const T &NewData);
+    void insert(const T &newData);
 
-    int InOrder();
+    int inOrder();
 
-    int InOrder(TreeNode<T> *p);
+    int inOrder(TreeNode<T> *p);
 
-    void Invert();
+    void invert();
 
-    void Invert(TreeNode<T> *p);
+    void invert(TreeNode<T> *p);
 
-    void GetHeigth();
+    void getHeigth();
 
-    void Graph(TreeNode<T> *p, int x, int y, int delta);
+    void graph(TreeNode<T> *p, int x, int y, int delta);
 
-    void Graph() { Graph(Root, 320, 40, 100); }
+    void graph() { graph(root, 320, 40, 100); }
 
 private:
-    TreeNode<T> *Root;
-    int Heigth;
+    TreeNode<T> *root;
+    int heigth;
     int x, y;
 };
 
 template<class T>
 Tree<T>::Tree() {
-    Heigth = 0;
-    Root = NULL;
+    heigth = 0;
+    root = NULL;
     x = 320;
     y = 40;
 }
 
 template<class T>
-void Tree<T>::Insert(const T &NewData) {
-    TreeNode<T> *p, *q, *NewNode;
-    if (!Root) {
-        NewNode = new TreeNode<T>(NewData);
-        Root = NewNode;
+void Tree<T>::insert(const T &newData) {
+    TreeNode<T> *p, *q, *newNode;
+    if (!root) {
+        newNode = new TreeNode<T>(newData);
+        root = newNode;
         return;
     }
-    p = Root;
+    p = root;
     while (p) {
         q = p;
-        if (NewData < p->Data) p = p->Left;
-        else if (NewData > p->Data) p = p->Right;
-        else if (NewData == p->Data) {
+        if (newData < p->data) p = p->left;
+        else if (newData > p->data) p = p->right;
+        else if (newData == p->data) {
             std::cout << "\n" << "Data Exists in The List!" << "\n";
             return;
         }
     }
-    NewNode = new TreeNode<T>(NewData);
+    newNode = new TreeNode<T>(newData);
 
-    if (NewData < q->Data) q->Left = NewNode;
-    else if (NewData > q->Data) q->Right = NewNode;
+    if (newData < q->data) q->left = newNode;
+    else if (newData > q->data) q->right = newNode;
 }
 
 template<class T>
-int Tree<T>::InOrder(TreeNode<T> *p) {
+int Tree<T>::inOrder(TreeNode<T> *p) {
     int a, b, max;
 
     if (!p) return 0;
 
-    a = InOrder(p->Left);
-    std::cout << p->Data << " ";
-    b = InOrder(p->Right);
+    a = inOrder(p->left);
+    std::cout << p->data << " ";
+    b = inOrder(p->right);
     max = (a > b) ? a : b;
-    Heigth = max + 1;
-    return Heigth;
+    heigth = max + 1;
+    return heigth;
 }
 
 template<class T>
-int Tree<T>::InOrder() {
-    InOrder(Root);
+int Tree<T>::inOrder() {
+    inOrder(root);
 }
 
 template<class T>
-void Tree<T>::Invert(TreeNode<T> *p) {
+void Tree<T>::invert(TreeNode<T> *p) {
     if (!p) return;
-    TreeNode<T> *Temp;
-    Temp = p->Left;
-    p->Left = p->Right;
-    p->Right = Temp;
+    TreeNode<T> *temp;
+    temp = p->left;
+    p->left = p->right;
+    p->right = temp;
 
-    Invert(p->Left);
-    Invert(p->Right);
+    invert(p->left);
+    invert(p->right);
 }
 
 template<class T>
-void Tree<T>::Invert() {
-    Invert(Root);
+void Tree<T>::invert() {
+    invert(root);
 }
 
 template<class T>
-void Tree<T>::GetHeigth() {
-    Heigth--;
-    std::cout << Heigth << std::endl;
+void Tree<T>::getHeigth() {
+    heigth--;
+    std::cout << heigth << std::endl;
 }
 
 template<class T>
-void Tree<T>::Graph(TreeNode<T> *p, int x, int y, int delta) {
+void Tree<T>::graph(TreeNode<T> *p, int x, int y, int delta) {
     if (!p) return;
     char s[5];
-//    itoa(p->Data, s, 10); This function is not defined in ANSI-C and is not part of C++, but is supported by some compilers.
-    sprintf(s, "%d", p->Data);
+//    itoa(p->data, s, 10); This function is not defined in ANSI-C and is not part of C++, but is supported by some compilers.
+    sprintf(s, "%d", p->data);
 
 //    settextstyle(2, 0, 4);
     setcolor(12);
     outtextxy(x, y, s);
 
     setcolor(15);
-    if (p->Left) line(x - 5, y + 5, x - delta, y + 30);
-    if (p->Right) line(x + 5, y + 10, x + delta, y + 30);
+    if (p->left) line(x - 5, y + 5, x - delta, y + 30);
+    if (p->right) line(x + 5, y + 10, x + delta, y + 30);
 
-    Graph(p->Left, x - delta, y + 30, delta / 1.5);
-    Graph(p->Right, x + delta, y + 30, delta / 1.5);
+    graph(p->left, x - delta, y + 30, delta / 1.5);
+    graph(p->right, x + delta, y + 30, delta / 1.5);
 
 }
 
 int main() {
-    Tree<int> TreeObj;
+    Tree<int> treeObj;
 
     int i = 0;
     while (1) {
         std::cout << "Input Data:";
         std::cin >> i;
         if (i == -1) break;
-        TreeObj.Insert(i);
+        treeObj.insert(i);
     }
     std::cout << "Inorder Sweep: ";
-    TreeObj.InOrder();
+    treeObj.inOrder();
     std::cout << "\n" << "Heigth Of Tree is :";
-    TreeObj.GetHeigth();
+    treeObj.getHeigth();
     std::cout << "Press any key to see graph of Tree...";
     std::cin.get();
 
     i = 0;
     initgraph(&i, &i, NULL);
 //  setbkcolor(1);
-    TreeObj.Graph();
+    treeObj.graph();
     std::cout << "Press any key to continue...";
     std::cin.get();
     closegraph();
-    TreeObj.Invert();
+    treeObj.invert();
     std::cout << std::endl;
     std::cout << "Inorder sweep of inverted tree is :";
-    TreeObj.InOrder();
+    treeObj.inOrder();
     std::cout << "\n" << "Heigth of inverted Tree is : ";
-    TreeObj.GetHeigth();
+    treeObj.getHeigth();
 
     std::cout << "Press any key to see graph of Tree...";
     std::cin.get();
@@ -195,7 +195,7 @@ int main() {
     i = 0;
     initgraph(&i, &i, NULL);
 //    setbkcolor(1);
-    TreeObj.Graph();
+    treeObj.graph();
     std::cout << "Program  Ended!";
     std::cin.get();
 
