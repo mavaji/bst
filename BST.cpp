@@ -4,15 +4,15 @@
  */
 
 #include<stdio.h>
+#include<conio.h>
 #include<graphics.h>
-#include<iostream>
+#include<iostream.h>
 #include<stdlib.h>
 
 template<class T>
 class TreeNode {
 public:
-    template<class U> friend
-    class Tree;
+    friend class Tree <T>;
 
     TreeNode();
 
@@ -76,19 +76,19 @@ template<class T>
 void Tree<T>::insert(const T &newData) {
     TreeNode<T> *p, *q, *newNode;
     if (!root) {
-        newNode = new TreeNode<T>(newData);
-        root = newNode;
-        return;
+	newNode = new TreeNode<T>(newData);
+	root = newNode;
+	return;
     }
     p = root;
     while (p) {
-        q = p;
-        if (newData < p->data) p = p->left;
-        else if (newData > p->data) p = p->right;
-        else if (newData == p->data) {
-            std::cout << "\n" << "Data Exists in The List!" << "\n";
-            return;
-        }
+	q = p;
+	if (newData < p->data) p = p->left;
+	else if (newData > p->data) p = p->right;
+	else if (newData == p->data) {
+	    cout << "\n" << "Data Exists in The List!" << "\n";
+	    return;
+	}
     }
     newNode = new TreeNode<T>(newData);
 
@@ -103,7 +103,7 @@ int Tree<T>::inOrder(TreeNode<T> *p) {
     if (!p) return 0;
 
     a = inOrder(p->left);
-    std::cout << p->data << " ";
+    cout << p->data << " ";
     b = inOrder(p->right);
     max = (a > b) ? a : b;
     heigth = max + 1;
@@ -135,17 +135,17 @@ void Tree<T>::invert() {
 template<class T>
 void Tree<T>::getHeigth() {
     heigth--;
-    std::cout << heigth << std::endl;
+    cout << heigth << endl;
 }
 
 template<class T>
 void Tree<T>::graph(TreeNode<T> *p, int x, int y, int delta) {
     if (!p) return;
     char s[5];
-//    itoa(p->data, s, 10); This function is not defined in ANSI-C and is not part of C++, but is supported by some compilers.
+    itoa(p->data, s, 10); //This function is not defined in ANSI-C and is not part of C++, but is supported by some compilers.
     sprintf(s, "%d", p->data);
 
-//    settextstyle(2, 0, 4);
+    settextstyle(2, 0, 4);
     setcolor(12);
     outtextxy(x, y, s);
 
@@ -159,45 +159,47 @@ void Tree<T>::graph(TreeNode<T> *p, int x, int y, int delta) {
 }
 
 int main() {
+    clrscr();
+
     Tree<int> treeObj;
 
     int i = 0;
     while (1) {
-        std::cout << "Input Data:";
-        std::cin >> i;
-        if (i == -1) break;
-        treeObj.insert(i);
+	cout << "Input Data:";
+	cin >> i;
+	if (i == -1) break;
+	treeObj.insert(i);
     }
-    std::cout << "Inorder Sweep: ";
+    cout << "Inorder Sweep: ";
     treeObj.inOrder();
-    std::cout << "\n" << "Heigth Of Tree is :";
+    cout << "\n" << "Heigth Of Tree is :";
     treeObj.getHeigth();
-    std::cout << "Press any key to see graph of Tree...";
-    std::cin.get();
+    cout << "Press any key to see graph of Tree...";
+    cin.get();cin.get();
 
     i = 0;
-    initgraph(&i, &i, NULL);
-//  setbkcolor(1);
+    initgraph(&i, &i, "c:\\bgi");
+    setbkcolor(1);
     treeObj.graph();
-    std::cout << "Press any key to continue...";
-    std::cin.get();
+    cout << "Press any key to continue...";
+    cin.get();
     closegraph();
     treeObj.invert();
-    std::cout << std::endl;
-    std::cout << "Inorder sweep of inverted tree is :";
+    cout << endl;
+    cout << "Inorder sweep of inverted tree is :";
     treeObj.inOrder();
-    std::cout << "\n" << "Heigth of inverted Tree is : ";
+    cout << "\n" << "Heigth of inverted Tree is : ";
     treeObj.getHeigth();
 
-    std::cout << "Press any key to see graph of Tree...";
-    std::cin.get();
+    cout << "Press any key to see graph of Tree...";
+    cin.get();
 
     i = 0;
-    initgraph(&i, &i, NULL);
-//    setbkcolor(1);
+    initgraph(&i, &i, "c:\\bgi");
+    setbkcolor(1);
     treeObj.graph();
-    std::cout << "Program  Ended!";
-    std::cin.get();
+    cout << "Program  Ended!";
+    cin.get();
 
     return 0;
 }
